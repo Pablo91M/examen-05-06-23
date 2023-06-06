@@ -49,7 +49,7 @@ const registrarVianda = (req,res)=> {
             mensaje: "La vianda ya esta registrada"
         })
     }
-    if(!codigo || codigo.length !== 5 || codigo[0] !== 'v' || codigo[0] !== 'V'){
+    if(!codigo || codigo.length !== 5 || codigo[0] !== 'v' && codigo[0] !== 'V'){
         res.status(400).json({
             mensaje: "El codigo de la vianda debe ser de 5 letras y debe comenzar con la letra v/V"
         })
