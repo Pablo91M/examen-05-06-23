@@ -40,6 +40,38 @@ const modificarVianda = (req,res) => {
     })
 }
 
+const registrarVianda = (req,res)=> {
+    const {codigo,tipo,stock =0, descripcion} = req.body
+    if(!codigo || codigo.length !== 5 || codigo[0] !=='v'){
+        res.status(400).json({
+            mensaje: "El codigo de la vianda debe se de 5 letras y debe comenzar con la letra v"
+        })
+    }
+    const existeVianda = viandas.find(vianda => vianda.codigo == codigo)
+    if(existeVianda){
+        res.status(400).json({
+            mensaje: "La vianda ya esta registrada"
+        })
+    }
+    const permitidos =['TARTA', 'POLLO', 'PASTA', 'PIZZA', 'EMPANADAS']
+    if(!permitidos.includes(tipo)){
+        res.status(400).json({
+            mensaje: "Tipo de vianda incorrecta"
+        })
+    }
+    if(stock <0){
+        res.status(400).json({
+            mensaje: "El stock debe ser mayor a 0"
+        })
+    }
+    const nuevaVianda ={
+        codigo,tipo,aptoCeliaco, stock, descripcion
+    }
+    viandas.push(201).json({
+        mensaje: "La vianda fue registrada exitosamente!"
+    })
+}
+
 module.exports = {
-    getAllViandas, getViandaByCodigo, modificarVianda
+    getAllViandas, getViandaByCodigo, modificarVianda,registrarVianda
 }

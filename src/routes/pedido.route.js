@@ -4,5 +4,6 @@ const route = Router()
 
 route.get("/",controller.getAllPedidos)
 route.get("/:id",controller.getPedidosById)
+route.post("/",controller.registrarPedido)
 
 module.exports = route

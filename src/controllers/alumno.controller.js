@@ -17,7 +17,7 @@ const getAlumnoByDni = (req,res) => {
 }
 
 const modificarAlumno = (req,res) =>{
-    const dni = req.params.dni
+    const dni = req.params
     const {habilitado, celiaco, edad} = req.body
     const indice = alumnos.findIndex(a => a.dni == dni)
     if(indice >= 0){
@@ -39,6 +39,34 @@ const modificarAlumno = (req,res) =>{
     })
     }
 
+    const registarAlumno = (req,res) => {
+        const { dni, habilitado=true, edad, celiaco=false} = req.body
+        const validarDni =!/^\d{8}$/
+        if(!validarDni.test(dni)){
+            res.status(400).json({
+                mensaje: "El DNI debe tener 8 digitos numericos"
+            })
+        }
+        const existeAlumno = alumnos.find(alumno => alumno.dni == dni)
+        if(existeAlumno){
+            res.status(400).json({
+                mensaje: "El alumno ya esta registrado!"
+            })
+        }
+        if(edad <18 || edad > 99){
+            res.status(400).json({
+                mensaje:" El alumno debe ser mayor a 18 y menor a 99 años"
+            })
+        }
+        const nuevoAlumno ={
+            dni,habilitado, edad, celiaco
+        }
+        alumnos.push(nuevoAlumno)
+        res.status(201).json({
+            mensaje: "El alumno fue registrado exitosamente!"
+        })
+    }
+
 module.exports = {
-    getAllAlumnos, getAlumnoByDni, modificarAlumno
+    getAllAlumnos, getAlumnoByDni, modificarAlumno, registarAlumno
 }

@@ -5,5 +5,6 @@ const route = Router()
 route.get("/",controller.getAllViandas)
 route.get("/:codigo",controller.getViandaByCodigo)
 route.put("/:codigo",controller.modificarVianda)
+route.post("/",controller.registrarVianda)
 
 module.exports = route
