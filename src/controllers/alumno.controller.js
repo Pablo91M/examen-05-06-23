@@ -18,7 +18,7 @@ const getAlumnoByDni = (req,res) => {
 
 const modificarAlumno = (req,res) =>{
     const dni = req.params
-    const {habilitado, celiaco, edad} = req.body
+    const {habilitado, celiaco, edad,nombre} = req.body
     const indice = alumnos.findIndex(a => a.dni == dni)
     if(indice >= 0){
         const alumno = alumnos[indice]
@@ -40,14 +40,14 @@ const modificarAlumno = (req,res) =>{
     }
 
     const registarAlumno = (req,res) => {
-        const { dni, habilitado=true, edad, celiaco=false} = req.body
-        const validarDni =!/^\d{8}$/
-        if(!validarDni.test(dni)){
+        const { dni,nombre, habilitado=true, edad, celiaco=false} = req.body
+        const validarDni = /^\d{8}$/
+        if (!validarDni.test(dni)){
             res.status(400).json({
                 mensaje: "El DNI debe tener 8 digitos numericos"
             })
         }
-        const existeAlumno = alumnos.find(alumno => alumno.dni == dni)
+        const existeAlumno = alumnos.find(alumno => alumno.dni === dni)
         if(existeAlumno){
             res.status(400).json({
                 mensaje: "El alumno ya esta registrado!"
@@ -59,11 +59,14 @@ const modificarAlumno = (req,res) =>{
             })
         }
         const nuevoAlumno ={
-            dni,habilitado, edad, celiaco
+            dni,nombre, edad,
+            habilitado: habilitado !==undefined? habilitado: true,
+            celiaco: celiaco !== undefined? celiaco: false
         }
         alumnos.push(nuevoAlumno)
         res.status(201).json({
-            mensaje: "El alumno fue registrado exitosamente!"
+            mensaje: "El alumno fue registrado exitosamente!",
+            alumno: nuevoAlumno
         })
     }
 

@@ -41,16 +41,17 @@ const modificarVianda = (req,res) => {
 }
 
 const registrarVianda = (req,res)=> {
-    const {codigo,tipo,stock =0, descripcion} = req.body
-    if(!codigo || codigo.length !== 5 || codigo[0] !=='v'){
-        res.status(400).json({
-            mensaje: "El codigo de la vianda debe se de 5 letras y debe comenzar con la letra v"
-        })
-    }
-    const existeVianda = viandas.find(vianda => vianda.codigo == codigo)
+    const {codigo,tipo,stock =0, descripcion,aptoCeliaco=false} = req.body
+
+    const existeVianda = viandas.find(vianda => vianda.codigo === codigo)
     if(existeVianda){
         res.status(400).json({
             mensaje: "La vianda ya esta registrada"
+        })
+    }
+    if(!codigo || codigo.length !== 5 || codigo[0] !== 'v' || codigo[0] !== 'V'){
+        res.status(400).json({
+            mensaje: "El codigo de la vianda debe ser de 5 letras y debe comenzar con la letra v/V"
         })
     }
     const permitidos =['TARTA', 'POLLO', 'PASTA', 'PIZZA', 'EMPANADAS']
@@ -65,10 +66,11 @@ const registrarVianda = (req,res)=> {
         })
     }
     const nuevaVianda ={
-        codigo,tipo,aptoCeliaco, stock, descripcion
+        codigo,tipo, stock, descripcion,aptoCeliaco
     }
     viandas.push(201).json({
-        mensaje: "La vianda fue registrada exitosamente!"
+        mensaje: "La vianda fue registrada exitosamente!",
+        vianda: nuevaVianda
     })
 }
 
