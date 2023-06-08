@@ -1,0 +1,21 @@
+{
+  "name": "examen05-06-23",
+  "version": "1.0.0",
+  "description": "* El post de viandas no esta completo, faltan algunas validaciones.\r * El post de pedidos esta igual que el dee viandas.\r * en los esos dos casos se me complico el post, es algo que se me complica bastante, mas que nada con el tema de las validaciones, ahi es donde siempre me trabo y se me complica un poco y despues de pensar y probar como que me nublo y no me sale nada...\r * el resto de los puntos los pude hacer sin ningun problema, los probe y funcionaron!",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/app.js",
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
